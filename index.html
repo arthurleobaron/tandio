@@ -151,6 +151,21 @@
   .form-row button:active { transform: scale(0.98); }
   .form-row button:disabled { opacity: 0.6; cursor: not-allowed; }
 
+  .inline-success {
+    display: none;
+    text-align: center;
+    padding: 0.85rem 1.5rem;
+    background: white;
+    border: 1.5px solid var(--terra-light);
+    border-radius: 100px;
+    color: var(--brown-mid);
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    box-shadow: 0 4px 28px rgba(193,96,58,0.1);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
   .error-msg {
     display: none; text-align: center;
     padding: 0.45rem 1rem; color: #8B1A1A; font-size: 0.8rem;
@@ -358,7 +373,10 @@
       <button id="submitBtn" onclick="handleSubmit()">Nous réserver une place</button>
     </div>
     <div class="error-msg" id="errorMsg"></div>
-    <p class="form-note">Pas de spam. Juste un email quand on est prêts.</p>
+    <p class="form-note" id="formNote">Pas de spam. Juste un email quand on est prêts.</p>
+    <div class="inline-success" id="inlineSuccess">
+      🌿 Vous êtes sur la liste — on vous prévient en premier.
+    </div>
   </div>
 
   <div class="features">
@@ -461,6 +479,10 @@
   function closePopup() {
     document.getElementById('popupOverlay').classList.remove('active');
     document.body.style.overflow = '';
+    // Afficher le message de confirmation inline
+    document.getElementById('formRow').style.display = 'none';
+    document.getElementById('formNote').style.display = 'none';
+    document.getElementById('inlineSuccess').style.display = 'block';
   }
 
   function closePopupOutside(e) {
