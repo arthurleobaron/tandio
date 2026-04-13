@@ -29,6 +29,7 @@
     color: var(--brown);
     min-height: 100vh;
     overflow-x: hidden;
+    padding-top: 80px;
   }
 
   /* NAV */
@@ -36,7 +37,10 @@
     padding: 1.2rem 2rem;
     display: flex;
     align-items: center;
-    position: relative;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: var(--cream);
+    border-bottom: 1px solid var(--cream-dark);
     z-index: 10;
   }
   .logo {
@@ -63,7 +67,7 @@
 
   /* HERO */
   .hero {
-    min-height: calc(100vh - 76px);
+    min-height: 100vh; padding-top: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
