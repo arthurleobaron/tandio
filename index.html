@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tandio — S'aimer, ça s'entretient</title>
+<meta name="description" content="Des micro-exercices à faire à deux pour entretenir ce qui compte. Rejoignez la liste d'attente Tandio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --terra: #C1603A;
+    --terra-light: #D4856A;
+    --terra-dark: #9A4A2A;
+    --cream: #F5EFE6;
+    --cream-dark: #EBE1D3;
+    --brown: #2C1A0E;
+    --brown-mid: #5A3825;
+    --peach: #F0C4A8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--cream);
+    color: var(--brown);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+  .logo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-decoration: none;
+  }
+  .logo svg {
+    height: 52px;
+    width: auto;
+    display: block;
+  }
+  .logo-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.62rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--brown-mid);
+    letter-spacing: 0.04em;
+    opacity: 0.75;
+    padding-left: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem 1.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    gap: 0;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 560px; height: 560px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--peach) 0%, transparent 70%);
+    opacity: 0.4;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .orb { position: absolute; border-radius: 50%; pointer-events: none; }
+  .orb-1 { width: 180px; height: 180px; background: var(--peach); opacity: 0.25; top: -50px; right: -50px; animation: drift 8s ease-in-out infinite alternate; }
+  .orb-2 { width: 120px; height: 120px; background: var(--terra-light); opacity: 0.15; bottom: 60px; left: -30px; animation: drift 10s ease-in-out infinite alternate-reverse; }
+
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--terra); font-weight: 500; margin-bottom: 1.1rem;
+    opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s;
+    position: relative; z-index: 2;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+    line-height: 1.08; letter-spacing: -0.03em;
+    color: var(--brown); max-width: 660px; margin-bottom: 1.1rem;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.35s;
+    position: relative; z-index: 2;
+  }
+  .hero h1 em { font-style: italic; color: var(--terra); }
+
+  .hero-sub {
+    font-size: 1rem; line-height: 1.7; color: var(--brown-mid);
+    max-width: 440px; font-weight: 300; margin-bottom: 1.75rem;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.5s;
+    position: relative; z-index: 2;
+  }
+
+  /* FORMULAIRE */
+  .form-wrap {
+    width: 100%; max-width: 430px; margin-bottom: 1.75rem;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.65s;
+    position: relative; z-index: 2;
+  }
+
+  .form-row {
+    display: flex;
+    border: 1.5px solid var(--terra); border-radius: 100px;
+    overflow: hidden; background: white;
+    box-shadow: 0 4px 28px rgba(193,96,58,0.13);
+    transition: box-shadow 0.2s;
+  }
+  .form-row:focus-within { box-shadow: 0 4px 28px rgba(193,96,58,0.26); }
+
+  .form-row input[type="email"] {
+    flex: 1; padding: 0.88rem 1.35rem;
+    border: none; outline: none;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    background: transparent; color: var(--brown); min-width: 0;
+  }
+  .form-row input::placeholder { color: #B0967E; }
+
+  .form-row button {
+    padding: 0.88rem 1.35rem;
+    background: var(--terra); color: white; border: none;
+    border-radius: 100px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500;
+    white-space: nowrap; flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .form-row button:hover { background: var(--terra-dark); }
+  .form-row button:active { transform: scale(0.98); }
+  .form-row button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .error-msg {
+    display: none; text-align: center;
+    padding: 0.45rem 1rem; color: #8B1A1A; font-size: 0.8rem;
+    margin-top: 0.55rem; background: #FDF0F0;
+    border-radius: 10px; border: 1px solid #F0BABA;
+  }
+
+  .form-note {
+    text-align: center; font-size: 0.73rem;
+    color: var(--brown-mid); margin-top: 0.8rem; opacity: 0.6;
+  }
+
+  /* FEATURES — dans le hero, juste sous le formulaire */
+  .features {
+    width: 100%; max-width: 820px;
+    opacity: 0; animation: fadeUp 0.7s ease forwards 0.85s;
+    position: relative; z-index: 2;
+    padding: 0 0.5rem;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    justify-items: center;
+  }
+
+  .feat-card {
+    background: white; border-radius: 16px;
+    padding: 1.3rem 1.25rem; border: 1px solid var(--cream-dark);
+    position: relative; overflow: hidden; width: 100%;
+    transition: transform 0.2s ease;
+  }
+  .feat-card:hover { transform: translateY(-2px); }
+  .feat-card::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--terra); opacity: 0; transition: opacity 0.2s;
+  }
+  .feat-card:hover::after { opacity: 1; }
+
+  .feat-icon {
+    width: 36px; height: 36px; background: var(--cream);
+    border-radius: 9px; display: flex; align-items: center;
+    justify-content: center; font-size: 17px; margin: 0 auto 0.75rem;
+  }
+  .feat-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem; color: var(--brown); margin-bottom: 0.35rem;
+    text-align: center;
+  }
+  .feat-card p {
+    font-size: 0.82rem; color: var(--brown-mid); line-height: 1.6; font-weight: 300;
+    text-align: center;
+  }
+
+  /* Responsive features : 2 colonnes + centrage du dernier élément */
+  @media (max-width: 640px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .feat-card:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      max-width: calc(50% - 0.425rem);
+      justify-self: center;
+    }
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 1.5rem;
+    font-size: 0.75rem; color: var(--brown-mid); opacity: 0.55;
+    border-top: 1px solid var(--cream-dark);
+  }
+
+  /* POPUP */
+  .popup-overlay {
+    position: fixed; inset: 0;
+    background: rgba(44, 26, 14, 0.52);
+    backdrop-filter: blur(6px);
+    z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s;
+  }
+  .popup-overlay.active { opacity: 1; visibility: visible; }
+
+  .popup {
+    background: var(--cream); border-radius: 28px;
+    padding: 2.5rem 2rem 2rem; max-width: 380px; width: 100%;
+    text-align: center; position: relative;
+    transform: scale(0.88) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 24px 80px rgba(44, 26, 14, 0.22);
+  }
+  .popup-overlay.active .popup {
+    transform: scale(1) translateY(0);
+  }
+
+  .popup-close {
+    position: absolute; top: 1rem; right: 1.2rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.3rem; color: var(--brown-mid);
+    opacity: 0.45; transition: opacity 0.15s; line-height: 1;
+  }
+  .popup-close:hover { opacity: 1; }
+
+  .popup-icon {
+    width: 60px; height: 60px; background: white;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 26px;
+    margin: 0 auto 1.1rem;
+    border: 1.5px solid var(--cream-dark);
+  }
+
+  .popup h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.55rem; color: var(--brown);
+    margin-bottom: 0.55rem; line-height: 1.2;
+  }
+
+  .popup p {
+    font-size: 0.88rem; color: var(--brown-mid);
+    font-weight: 300; line-height: 1.65; margin-bottom: 1.6rem;
+  }
+
+  .popup-divider {
+    font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--brown-mid);
+    opacity: 0.45; margin-bottom: 0.9rem;
+  }
+
+  .social-links {
+    display: flex; gap: 0.7rem; justify-content: center;
+  }
+
+  .social-btn {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.65rem 1.2rem; border-radius: 100px;
+    text-decoration: none; font-size: 0.86rem; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    transition: transform 0.15s ease, opacity 0.15s;
+  }
+  .social-btn:hover { transform: translateY(-2px); opacity: 0.88; }
+  .social-btn svg { width: 15px; height: 15px; fill: white; flex-shrink: 0; }
+
+  .social-btn.instagram { background: var(--terra); color: white; }
+  .social-btn.tiktok    { background: var(--brown); color: white; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(14px,-18px) scale(1.05); }
+  }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .form-row { border-radius: 14px; flex-direction: column; }
+    .form-row button {
+      border-radius: 0 0 12px 12px;
+      border-top: 1px solid rgba(193,96,58,0.18);
+      padding: 0.9rem; width: 100%;
+    }
+    .nav-tagline { display: none; }
+    .social-links { flex-direction: column; }
+    .social-btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <svg width="155" height="47" viewBox="36 18 358 90" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;">
+      <circle cx="68" cy="60" r="26" fill="none" stroke="#C1603A" stroke-width="3.5"/>
+      <circle cx="96" cy="60" r="26" fill="none" stroke="#C1603A" stroke-width="3.5"/>
+      <text x="136" y="80" font-family="'DM Serif Display', Georgia, serif" font-size="52" fill="#2E2A27">Tandio</text>
+    </svg>
+    <span class="logo-tagline">S'aimer, ça s'entretient.</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <p class="hero-eyebrow">Bientôt disponible</p>
+
+  <h1>Votre relation mérite<br>un peu de <em>soin</em> chaque jour.</h1>
+
+  <p class="hero-sub">
+    Des micro-exercices à faire à deux, conçus pour entretenir ce qui compte —
+    avant que l'éloignement ne s'installe.
+  </p>
+
+  <div class="form-wrap">
+    <div class="form-row" id="formRow">
+      <input type="email" id="emailInput" placeholder="votre@email.com" autocomplete="email" />
+      <button id="submitBtn" onclick="handleSubmit()">Nous réserver une place</button>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+    <p class="form-note">Pas de spam. Juste un email quand on est prêts.</p>
+  </div>
+
+  <div class="features">
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">⏱</div>
+        <h3>5 minutes suffisent</h3>
+        <p>Des exercices conçus pour s'intégrer dans le quotidien, pas pour s'y ajouter.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌱</div>
+        <h3>Une approche préventive</h3>
+        <p>On n'attend pas que ça se dégrade. On entretient, comme on prend soin de sa santé.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">💬</div>
+        <h3>Fait pour deux</h3>
+        <p>Pensé comme une pratique commune — pas un programme solo fait chacun de son côté.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Tandio — France &nbsp;·&nbsp; <a href="/mentions-legales.html" style="color: var(--brown-mid); text-decoration: none; opacity: 0.8;">Mentions légales</a></footer>
+
+<!-- POPUP CONFIRMATION -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopupOutside(event)">
+  <div class="popup" id="popup">
+    <button class="popup-close" onclick="closePopup()" aria-label="Fermer">✕</button>
+    <div class="popup-icon">🌿</div>
+    <h2>Vous faites partie<br>de l'aventure.</h2>
+    <p>
+      On vous contactera en premier dès que Tandio est prêt.<br>
+      En attendant, suivez-nous pour les premiers contenus.
+    </p>
+    <p class="popup-divider">Nous suivre</p>
+    <div class="social-links">
+      <a href="https://www.instagram.com/tandio_fr" target="_blank" rel="noopener" class="social-btn instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.tiktok.com/@tandio_fr" target="_blank" rel="noopener" class="social-btn tiktok">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.29 6.29 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.78a4.85 4.85 0 01-1.01-.09z"/></svg>
+        TikTok
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function handleSubmit() {
+    const email = document.getElementById('emailInput').value.trim();
+    const errorMsg = document.getElementById('errorMsg');
+    const btn = document.getElementById('submitBtn');
+
+    errorMsg.style.display = 'none';
+
+    // Validation format email
+    if (!email) {
+      errorMsg.textContent = 'Merci de renseigner votre adresse email.';
+      errorMsg.style.display = 'block';
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorMsg.textContent = 'Adresse email incorrecte — vérifiez le format (ex: vous@email.com).';
+      errorMsg.style.display = 'block';
+      return;
+    }
+
+    btn.textContent = '...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        openPopup();
+      } else {
+        throw new Error(data.error || 'Une erreur est survenue.');
+      }
+    } catch (err) {
+      btn.textContent = 'Nous réserver une place';
+      btn.disabled = false;
+      errorMsg.textContent = err.message;
+      errorMsg.style.display = 'block';
+    }
+  }
+
+  function openPopup() {
+    document.getElementById('popupOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePopup() {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closePopupOutside(e) {
+    if (e.target === document.getElementById('popupOverlay')) closePopup();
+  }
+
+  document.getElementById('emailInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSubmit();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePopup();
+  });
+</script>
+
+</body>
+</html>
